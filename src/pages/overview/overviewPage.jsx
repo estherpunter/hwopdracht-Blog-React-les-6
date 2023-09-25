@@ -11,7 +11,7 @@ console.log(posts);
             <ul>
                 {posts.map((post) => {
                     return <li key={post.id}>
-                       <Link to="/blogposts/:blogId">{post.title}</Link> ({post.author})  {post.comments} reacties - {post.shares} keer gedeeld
+                       <Link to="/blogposts/:blogId">{post.title}</Link> ({post.author}) {post.comments} reacties - {post.shares} keer gedeeld
                     </li>
                 })}
             </ul>
