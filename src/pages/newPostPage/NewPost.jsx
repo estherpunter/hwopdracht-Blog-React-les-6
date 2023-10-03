@@ -2,6 +2,7 @@ import './NewPost.css';
 import {useState} from "react";
 import {useNavigate} from "react-router-dom";
 import calculateReadTime from "../../helpers/calculateReadTime.js";
+import axios from "axios";
 
 function NewPost() {
     const [formState, setFormState] = useState({
@@ -20,19 +21,47 @@ function NewPost() {
         })
     }
 
-    function handleSubmit(e) {
-        e.preventDefault();
+    // function handleSubmit(e) {
+    //     e.preventDefault();
+    //
+    //     console.log({
+    //         ...formState,
+    //         shares: 0,
+    //         comments: 0,
+    //         created: new Date().toISOString(),
+    //         readTime: calculateReadTime(formState.content),
+    //     });
+    //
+    //     console.log('De blog is succesvol verzameld! 🌈');
+    //     navigate('/posts');
+    // }
 
-        console.log({
-            ...formState,
-            shares: 0,
-            comments: 0,
-            created: new Date().toISOString(),
-            readTime: calculateReadTime(formState.content),
-        });
+    async function handleSubmit() {
+        try {
+            const result = await axios.post('http://localhost:3000/posts', {
+                title: '',
+                subtitle: '',
+                content: '',
+                created: '',
+                author: '',
+                readTime: 0,
+                comments: 0,
+                shares: 0,
+            });
+            // e.preventDefault();
+            // console.log({
+            //     ...formState,
+            //     shares: 0,
+            //     comments: 0,
+            //     created: new Date().toISOString(),
+            //     readTime: calculateReadTime(formState.content),
+            // });
+            console.log('De blog is succesvol verzameld! 🌈');
+            navigate('/posts');
+        } catch (error) {
+            console.error(error);
+        }
 
-        console.log('De blog is succesvol verzameld! 🌈');
-        navigate('/posts');
     }
 
     return (

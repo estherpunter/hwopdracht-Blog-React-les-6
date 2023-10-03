@@ -3,7 +3,6 @@ import posts from "/src/constants/data.json";
 import {CaretLeft, Clock} from "@phosphor-icons/react";
 import formatDateString from "../../helpers/formatDateString.js";
 import axios from "axios";
-import {useState} from "react";
 
 function PostDetail() {
     const {id} = useParams();
