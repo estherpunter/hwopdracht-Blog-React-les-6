@@ -1,13 +1,16 @@
 import './Overview.css'
 // import posts from "/src/constants/data.json"
 import {Link} from "react-router-dom";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import axios from "axios";
 
 function Overview() {
-
     const [posts, setPosts] = useState([]);
     const [error, toggleError] = useState(false);
+
+    useEffect(() => {
+        void getPosts()
+    });
 
     async function getPosts() {
         try {
@@ -23,9 +26,6 @@ function Overview() {
         <section className="overview-section outer-content-container">
             <div className="inner-content-container">
                 <h1>Bekijk alle {posts.length} posts op het platform</h1>
-
-                <button type="button" onClick={getPosts} >Klik hier voor alle posts</button>
-
                 <ul className="post-list">
                     {posts.map((post) => {
                         return <li key={post.id} className="post-item">
@@ -36,6 +36,7 @@ function Overview() {
                         </li>
                     })}
                 </ul>
+                {error && <p>Er is iets mis gegaan met het ophalen van de data</p>}
             </div>
         </section>
     );

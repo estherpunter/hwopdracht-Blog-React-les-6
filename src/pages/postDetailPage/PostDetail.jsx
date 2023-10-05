@@ -1,20 +1,33 @@
 import {Link, useParams} from "react-router-dom";
-import posts from "/src/constants/data.json";
+// import posts from "/src/constants/data.json";
 import {CaretLeft, Clock} from "@phosphor-icons/react";
 import formatDateString from "../../helpers/formatDateString.js";
 import axios from "axios";
+import {useEffect, useState} from "react";
 
 function PostDetail() {
+    const [post, setPost] = useState({});
     const {id} = useParams();
-    const {title, readTime, subtitle, author, created, content, comments, shares} = posts.find((post) => {
-        return post.id.toString() === id;
-    })
 
+    const {
+        title,
+        readTime,
+        subtitle,
+        author,
+        created,
+        content,
+        comments,
+        shares
+    } = post;
+
+    useEffect(() => {
+       void getPost()
+    });
 
     async function getPost() {
         try {
             const response = await axios.get(`http://localhost:3000/posts/${id}`);
-            console.log(response.data);
+            setPost(response.data);
         } catch (error) {
             console.error(error);
         }
@@ -33,8 +46,6 @@ function PostDetail() {
                 </span>
                 <p>{content}</p>
                 <p>{comments} reacties - {shares} keer gedeeld</p>
-
-                <button type="button" onClick={getPost}>Bekijk de post hier</button>
 
                 <Link to="/posts" className="back-link">
                     <CaretLeft color="#38E991" size={22}/>
